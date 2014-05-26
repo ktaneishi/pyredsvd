@@ -6,16 +6,6 @@ from scipy.io import savemat, loadmat
 
 SVD_EPS = 1e-4
 
-def none(filename):
-    out = open(filename+'.none','w')
-    for l in open(filename):
-        seq = l.strip().split(' ')
-        cls = seq.pop(0)
-        if len(seq) == 0:
-            continue
-        out.write('%s\n' % ' '.join(seq))
-    out.close()
-
 def build_matrix(filename):
     row = []
     col = []
