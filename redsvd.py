@@ -1,4 +1,5 @@
 import os
+import gzip
 import numpy as np
 from scipy.sparse import coo_matrix
 from scipy import linalg
@@ -11,7 +12,7 @@ def build_matrix(filename):
     col = []
     data = []
     nrow = 0
-    for l in open(filename):
+    for l in gzip.open(filename):
         seq = l.strip().split()
         cls = seq.pop(0)
         if len(seq) == 0:
@@ -27,7 +28,7 @@ def build_matrix(filename):
     data = np.asarray(data)
 
     mat = coo_matrix((data, (row,col)), shape=(row.max()+1,col.max()+1))
-    savemat(filename+'.mat',{'default':mat})
+    savemat(filename.replace('gz','mat'), {'default':mat})
 
 def svd(mat,k=10):
     from scipy.sparse.linalg import svds
@@ -46,12 +47,12 @@ def GramSchmidt(mat):
         mat[:,i] *= 1.0 / norm
 
 def redsvd():
-    filename = 'data/news20.binary'
-    if not os.path.isfile(filename+'.mat'):
+    filename = 'news20.binary.gz'
+    if not os.path.isfile(filename.replace('gz','mat')):
         build_matrix(filename)
 
     k = 10
-    A = loadmat(filename+'.mat')['default']
+    A = loadmat(filename.replace('gz','mat'))['default']
 
     O = np.random.randn(A.shape[0]*k).reshape(A.shape[0],k)
     Y = A.T.dot(O)
