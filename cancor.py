@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 import statsmodels.api as sm
 import sys
 
@@ -62,18 +63,17 @@ def main():
     np.set_printoptions(precision=4)
     result = cancor(pop, oec)
     for k,v in result.items():
-        print k,v
+        print(k,v)
 
     u = np.dot(pop, result['xcoef'])
     v = np.dot(oec, result['ycoef'])
 
-    plt.grid()
-    plt.plot(u[:,0], v[:,0], '.')
+    plt.plot(u[:,0], v[:,0], 'o')
     plt.title('Canonical correlation analysis')
     plt.xlabel('$u_0$')
     plt.ylabel('$v_0$')
     plt.tight_layout()
-    plt.savefig('CCA.png')
+    plt.show()
 
 if __name__ == '__main__':
     main()

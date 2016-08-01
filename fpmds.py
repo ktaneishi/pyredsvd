@@ -2,14 +2,12 @@
 Reference: Peltason L et al. Rationalizing three-dimensional activity landscapes 
 and the influence of molecular representations on landscape topology and formation of activity cliffs. 
 J Chem Inf Model, J Chem Inf Model 50, 1021-1033, 2010.
-
-example chemical structures:
-http://www.drugbank.ca/system/downloads/current/structures/nutraceutical.sdf.zip
 """
 import numpy as np
+import matplotlib.pyplot as plt
 import scipy.interpolate
 import pybel
-import pylab
+import gzip
 
 def scale(X, center=True, scale=True):
     """ compatible with GNU R scale() """
@@ -36,7 +34,7 @@ def pca(X,npc=2):
 
 def fp_mds(fptype):
     fpss = []
-    for mol in pybel.readfile('sdf', 'nutraceutical.sdf'):
+    for mol in pybel.readfile('sdf', 'solubility.test.sdf'):
         fps = mol.calcfp(fptype=fptype).bits
         if len(fps) > 0: 
             fpss.append(fps)
@@ -60,18 +58,18 @@ def fp_mds(fptype):
     rbf = scipy.interpolate.Rbf(pcs[:,0], pcs[:,1], activities, function='linear', smooth=0.1)
     zi = rbf(xi, yi)
 
-    pylab.subplot(len(pybel.fps)/2,len(pybel.fps)/2,pybel.fps.index(fptype)+1)
-    pylab.title('%s' % fptype)
-    pylab.imshow(zi, vmin=zi.min(), vmax=zi.max(), origin='lower', cmap=pylab.cm.RdYlGn_r, aspect='auto',
+    plt.subplot(2,2,pybel.fps[-4:].index(fptype)+1)
+    plt.title('%s' % fptype)
+    plt.imshow(zi, vmin=zi.min(), vmax=zi.max(), origin='lower', cmap='RdYlGn_r', aspect='auto',
             extent=[pcs[:,0].min(), pcs[:,0].max(), pcs[:,1].min(), pcs[:,1].max()])
-    pylab.scatter(pcs[:,0], pcs[:,1], c=activities, cmap=pylab.cm.RdYlGn_r)
+    plt.scatter(pcs[:,0], pcs[:,1], c=activities, cmap='RdYlGn_r')
     
 def main():
-    pylab.figure(figsize=(8,8),dpi=100)
-    for fptype in pybel.fps:
+    plt.figure(figsize=(8,8))
+    for fptype in pybel.fps[-4:]:
         fp_mds(fptype)
-    pylab.tight_layout()
-    pylab.savefig('result.png')
+    plt.tight_layout()
+    plt.show()
 
 if __name__ == '__main__':
     main()

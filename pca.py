@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import statsmodels.api as sm
+import seaborn as sns
 import sklearn.decomposition
 import sklearn.datasets
 import os
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     # use only numerical columns
     values = scale(df.ix[:,:4], center=True, scale=True)
-    print 'DataFrame is a (%d x %d) matrix of "iris.csv":\n' % (values.shape[0], values.shape[1]) 
+    print('DataFrame is a (%d x %d) matrix of "iris.csv":\n' % (values.shape[0], values.shape[1])) 
 
     plt.figure(figsize=(10,5))
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     assert np.allclose(score, pca_svd.pc())
 
     plt.tight_layout()
-    plt.savefig('pca.png')
+    plt.show()
 
     # assert two princople components based on SVD and EigenDecomposition
-    print 'PCA(svd) == PCA(eig) is %s' % np.allclose(pca_svd.pc(),pca_eig.pc())
+    print('PCA(svd) == PCA(eig) is %s' % np.allclose(pca_svd.pc(),pca_eig.pc()))
