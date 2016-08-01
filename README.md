@@ -1,3 +1,6 @@
 redsvd, Randomized Singular Value Decomposition using NumPy/SciPy.
+See https://code.google.com/p/redsvd/ for detail.
 
-In detail, see https://code.google.com/p/redsvd/.
+![PCA](https://raw.githubusercontent.com/ktaneishi/redsvd/master/figure/PCA.png)
+![CCA](https://raw.githubusercontent.com/ktaneishi/redsvd/master/figure/CCA.png)
+![MDS](https://raw.githubusercontent.com/ktaneishi/redsvd/master/figure/MDS.png)
