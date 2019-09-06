@@ -72,6 +72,7 @@ def main():
     plt.title('Canonical correlation analysis')
     plt.xlabel('$u_0$')
     plt.ylabel('$v_0$')
+    plt.grid(True)
     plt.tight_layout()
     plt.show()
 
