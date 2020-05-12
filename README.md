@@ -14,16 +14,6 @@ The algorithm is based on _a randomized algorithm_ for computing large-scale SVD
 # Examples
 
 ```
->redsvd -i imat -o omat -r 10 -f dense
-compuate SVD for a dense matrix in imat and output omat.U omat.V, and omat.S
-with the 10 largest eigen values/vectors
-```
-
-```
-$ cat news20.binary
-1:0.016563 3:0.016563 6:0.016563  ...
-...
-
 $ python redsvd.py 
 read sparse matrix from news20.binary ... 33.261 sec.
   rows: 19996
