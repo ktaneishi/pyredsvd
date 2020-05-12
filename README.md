@@ -1,22 +1,15 @@
 # Randomized Singular Value Decomposition in Python
 
+pyredsvd is a python routine for solving several matrix decompositions including singular value decomposition (SVD), principal component analysis (PCA), and eigen value decomposition. 
+pyredsvd can handle very large matrix efficiently, and optimized for a truncated SVD of sparse matrices.
+For example, pyredsvd can compute a truncated SVD with top 20 singular values for a 100K x 100K matrix with 1M nonzero entries in less than five second.
 
-<img src="figure/CCA.png" width="500" alt="CCA" />
+The algorithm is based on _a randomized algorithm_ for computing large-scale SVD. Although it uses randomized matrices, _the results is very accurate with very high probability_.
 
 ## Requirements
 
 - numpy
 - scipy
-
-pyredsvd is a python routine for solving several matrix decompositions including singular value decomposition (SVD), principal component analysis (PCA), and eigen value decomposition. 
-pyredsvd can handle very large matrix efficiently, and optimized for a truncated SVD of sparse matrices.
-For example, redsvd can compute a truncated SVD with top 20 singular values for a 100K x 100K matrix with 1M nonzero entries in less than one second.
-
-The algorithm is based on the randomized algorithm for computing large-scale SVD. Although it uses randomized matrices, the results is very accurate with very high probability.
-
-# How to Use
-
-See redsvd.py
 
 # Examples
 
@@ -27,57 +20,19 @@ with the 10 largest eigen values/vectors
 ```
 
 ```
->redsvd -i imat -o omat -r 3 -f sparse -m PCA
-compuate PCA for a sparse matrix in imat and output omat.PC omat.SCORE
-with the 3 largest principal components
-```
-
-```
-> cat file1
- 1.0  2.0  3.0  4.0  5.0
--2.0 -1.0  0.0  1.0  2.0
- 1.0 -2.0  3.0 -5.0  7.0
-
-> redsvd -i file1 -o file1 -r 2 -f 2
-read dense matrix from file1 ... 0.000102997 sec.
-SVD for a dense matrix
-rows:   3
-cols:   5
-rank:   2
-compute SVD... -4.69685e-05 sec.
-write matrix to file1(.U|.S|.V) ... 0.018553 sec.
-finished.
-
-> cat file1.U
--0.372291 -0.926217
--0.005434 -0.061765
--0.928100 +0.371897
-> cat file1.V
--0.411950 -0.186912
--0.031819 -0.450366
--0.441672 -0.257618
-+0.432198 -0.806197
--0.668891 -0.214273
-> cat file1.S
-+9.176333
-+6.647099
-You can also use a sparse matrix representation.
-```
-
-```
-> cat news20.binary
+$ cat news20.binary
 1:0.016563 3:0.016563 6:0.016563  ...
 ...
 
-> redsvd -i news20.binary -o news20 -f 1 -r 10
-read sparse matrix from news20.binary ... 4.84901 sec.
-   rows:        19954
-   cols:        1355192
-nonzero:        9097916
-   rank:        10
-compute SVD... 2.52615 sec.
-write matrix to news20(.U|.S|.V) ... 5.6056 sec.
-finished.
+$ python redsvd.py 
+read sparse matrix from news20.binary ... 33.261 sec.
+  rows: 19996
+  cols: 1355191
+  nonzero: 9097916
+  rank: 10
+[18.78031779  3.05987719  2.37272713  2.0208399   1.95307871  1.94165703
+  1.88591713  1.82173629  1.80488558  1.73713894]
+compute SVD... 5.104 sec.
 
 > cat news20.S
 +17.973207
@@ -90,13 +45,11 @@ finished.
 +1.853175
 +1.770231
 +1.764138
-Experimental Result
-See the detailed result redsvd_result.pdf
 ```
 
 # Environment
 
-Intel(R) Core(TM)2 Quad CPU Q9550 @ 2.83GHz 8G
+Intel(R) Xeon Phi(TM) CPU 7210 @ 1.30GHz
 
 ```
 For dense matrices
