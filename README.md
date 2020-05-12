@@ -110,6 +110,7 @@ However, although the algorithm in redsvd samples both rows and columns, the ori
 
 - [ ] PCA
 - [ ] SymEigen
+- [ ] Performance tests
 
 # Original author
 
