@@ -1,19 +1,15 @@
-# %%
 import numpy as np
 from scipy import linalg, sparse
 from sklearn import datasets
 import timeit
 import gzip
 
-# %%
 SVD_EPS = 1e-4
 
-# %%
 def svd(mat, k=10):
     from scipy.sparse.linalg import svds
     return svds(mat,k=k)
 
-# %%
 def GramSchmidt(mat):
     for i in range(mat.shape[1]):
         for j in range(i):
@@ -26,7 +22,6 @@ def GramSchmidt(mat):
             return
         mat[:,i] *= 1.0 / norm
 
-# %%
 def redsvd(A, k=10):
     O = np.random.randn(A.shape[0]*k).reshape(A.shape[0],k)
     Y = A.T.dot(O)
@@ -42,7 +37,6 @@ def redsvd(A, k=10):
 
     return S
 
-# %%
 if __name__ == '__main__':
     filename = 'news20.binary.gz'
     A, target = datasets.load_svmlight_file(gzip.open(filename))
@@ -50,5 +44,3 @@ if __name__ == '__main__':
     start_time = timeit.default_timer()
     print(redsvd(A))
     print(timeit.default_timer() - start_time)
-
-# %%
